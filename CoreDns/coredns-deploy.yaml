@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-coredns
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: custom-coredns
+  template:
+    metadata:
+      labels:
+        k8s-app: custom-coredns
+    spec:
+      hostNetwork: true
+      dnsPolicy: Default
+      containers:
+        - name: coredns
+          image: localhost/coredns-root:latest
+          imagePullPolicy: IfNotPresent
+          args: [ "-conf", "/etc/coredns/Corefile" ]
+          ports:
+            - containerPort: 53
+              protocol: UDP
+            - containerPort: 53
+              protocol: TCP
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/coredns
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            allowPrivilegeEscalation: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: custom-coredns
+

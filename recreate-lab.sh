@@ -18,7 +18,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 # Wait for ingress to be ready
 kubectl wait --namespace ingress-nginx \
   --for=condition=Ready pod \
-  --selector=app.kubernetes.io/component=controller \
+  --selector=app.kubernetes.io/component=admission-webhook \
   --timeout=120s
 
 # Deploy your app and service
@@ -36,3 +36,9 @@ kind load docker-image localhost/coredns-root:latest
 kubectl apply -f ./CoreDns/coredns-configmap.yaml
 kubectl apply -f ./CoreDns/coredns-deploy.yaml
 kubectl apply -f ./CoreDns/coredns-service.yaml
+
+
+# Enable Metrics
+
+kubectl apply -f ./metrics-server/metrics-server.yaml
+

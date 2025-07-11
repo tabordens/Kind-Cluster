@@ -9,7 +9,7 @@ data:
         log
         errors
         hosts {
-            192.168.0.54 flask.lab.local
+          192.168.0.54 grafana.lab.local flask.lab.local
             fallthrough
         }
         forward . 8.8.8.8

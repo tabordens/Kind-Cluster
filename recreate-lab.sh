@@ -42,3 +42,8 @@ kubectl apply -f ./CoreDns/coredns-service.yaml
 
 kubectl apply -f ./metrics-server/metrics-server.yaml
 
+
+# Enable Grafana
+kubectl apply -f /grafana/grafana-deploy.yaml
+kubectl apply -f /grafana/grafana-ingress.yaml
+
